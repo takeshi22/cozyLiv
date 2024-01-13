@@ -1,0 +1,42 @@
+version: '3'
+services:
+  api:
+    build: ./api
+    tty: true
+    volumes:
+      - .:/go/src/cozyLiv
+    ports:
+      - "1313:1313"
+    networks:
+      - cozyLiv-network
+    depends_on:
+      - db
+  # front:
+  #   build: ./web
+  #   tty: true
+  #   volumes:
+  #     - ./web:/timememo/web
+  #     - /web/node_modules
+  #   ports:
+  #     - "9000:9000"
+  #   networks:
+  #     - my-network
+  db:
+    image: postgres:15.3
+    ports:
+      - "5432:5432"
+    networks:
+        - cozyLiv-network
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: cozyLiv
+      POSTGRES_USER: cozyLiv
+      POSTGRES_PASSWORD: cozyLiv
+  # web:
+  #   build: ./web
+  #   ports: 
+  #     - "1250:1250"
+networks:
+  cozyLiv-network:
+    external: true
