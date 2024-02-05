@@ -5,8 +5,8 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -17,7 +17,7 @@ import (
 
 func ReadCsv() []entity.Prefecture {
 	filePath, _ := filepath.Abs("static/toshi.csv")
-	data, err := ioutil.ReadFile(filePath)
+	data, err := os.ReadFile(filePath)
 	if err != nil {
 		fmt.Println(err)
 	}

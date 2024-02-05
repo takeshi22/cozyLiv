@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/takeshi22/cozyLiv/model/entity"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -12,7 +11,7 @@ import (
 var Db *gorm.DB
 
 func InitDatabase() (err error) {
-	dsn := fmt.Sprintf("host=%s user=%s dbname=%s password=%s TimeZone=%s  port=5432",
+	dsn := fmt.Sprintf("host=%s user=%s dbname=%s password=%s TimeZone=%s  port=5432 sslmode=disable",
 		"db",
 		"cozyLiv",
 		"cozyLiv",
@@ -25,9 +24,6 @@ func InitDatabase() (err error) {
 	}
 
 	Db = database
-
-	Db.AutoMigrate(&entity.Prefecture{})
-	Db.AutoMigrate(&entity.City{})
 
 	return nil
 }
