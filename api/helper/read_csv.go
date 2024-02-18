@@ -8,15 +8,14 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/google/uuid"
 	"github.com/takeshi22/cozyLiv/infrastructure"
 	"github.com/takeshi22/cozyLiv/model/entity"
 )
 
-func ReadCsv() []entity.Prefecture {
-	filePath, _ := filepath.Abs("static/toshi.csv")
+func ReadCsv() []entity.City {
+	filePath, _ := filepath.Abs("static/city.csv")
 	data, err := os.ReadFile(filePath)
 	if err != nil {
 		fmt.Println(err)
@@ -24,7 +23,7 @@ func ReadCsv() []entity.Prefecture {
 
 	r := csv.NewReader(bytes.NewBuffer(data))
 
-	var entities []entity.Prefecture
+	var entities []entity.City
 
 	for {
 		record, err := r.Read()
@@ -36,20 +35,17 @@ func ReadCsv() []entity.Prefecture {
 			log.Fatal(err)
 		}
 
-		elias := strings.Split(record[2], " ")[0]
+		prefecture := entity.Prefecture{}
+		infrastructure.Db.Where("code = ?", record[2]).Take(&prefecture)
 
-		entity := entity.Prefecture{
-			ID:    uuid.New(),
-			Name:  record[1],
-			Elias: elias,
+		entity := entity.City{
+			ID:           uuid.New(),
+			Name:         record[1],
+			PrefectureID: prefecture.ID,
 		}
+
 		entities = append(entities, entity)
 	}
-
-	prefectures := []entity.Prefecture{}
-
-	infrastructure.Db.Find(&prefectures)
-	fmt.Println(prefectures)
 
 	return entities
 }

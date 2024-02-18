@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	"github.com/takeshi22/cozyLiv/helper"
 	"github.com/takeshi22/cozyLiv/infrastructure"
 )
 
@@ -14,13 +13,13 @@ func main() {
 		return c.String(http.StatusOK, "Are you OK?")
 	})
 
-	e.GET("/read_csv", func(c echo.Context) error {
-		entities := helper.ReadCsv()
+	// e.GET("/read_csv", func(c echo.Context) error {
+	// 	entities := helper.ReadCsv()
 
-		infrastructure.Db.Create(*&entities)
+	// 	infrastructure.Db.Create(*&entities)
 
-		return nil
-	})
+	// 	return nil
+	// })
 
 	err := infrastructure.InitDatabase()
 	if err != nil {

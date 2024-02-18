@@ -4,7 +4,7 @@ RUN mkdir -p /go/src/cozyLiv
 WORKDIR /go/src/cozyLiv/api
 
 COPY go.mod ./
-# COPY go.sum ./
+COPY go.sum ./
 
 RUN go mod download
 

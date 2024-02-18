@@ -9,7 +9,6 @@ type City struct {
 	gorm.Model
 	ID           uuid.UUID `gorm:"type:uuid;primary_key;"`
 	Name         string
-	NameKana     string
 	PrefectureID uuid.UUID
 	Prefecture   Prefecture
 }
